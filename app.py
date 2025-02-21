@@ -17,17 +17,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Authenticate using Streamlit Secrets (from secrets.toml) ---
-try:
-    creds = Credentials.from_service_account_info(
-        st.secrets["gcp"]["service_account"],
-        scopes=["https://www.googleapis.com/auth/spreadsheets"]
-    )
-    gc = gspread.authorize(creds)
-    st.success("✅ Authentication successful!")
-except Exception as e:
-    st.error(f"❌ Authentication failed: {e}")
-    st.stop()
+# --- Authenticate using Service Account from Streamlit secrets ---
+creds = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],  # Fetch credentials from Streamlit secrets
+    scopes=["https://www.googleapis.com/auth/spreadsheets"]
+)
+gc = gspread.authorize(creds)
 
 # --- Open Google Sheet (Corrected String) ---
 spreadsheet = gc.open_by_key("1UMpZOBKxe3YghAbQFazyZAZgGcON7YVBDX6e-bUl8wI")
