@@ -20,7 +20,7 @@ st.markdown(
 # --- Authenticate using Service Account JSON ---
 creds = Credentials.from_service_account_file(
     
-    "https://github.com/jitain1/streamlit_app/blob/main/secrets.toml",
+    "https://github.com/jitain1/streamlit_app/blob/main/bigquery-demo-436010-099787ddf471.json",
     scopes=["https://www.googleapis.com/auth/spreadsheets"]
 )
 gc = gspread.authorize(creds)
