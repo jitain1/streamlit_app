@@ -17,13 +17,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Authenticate using Service Account JSON ---
-creds = Credentials.from_service_account_file(
-    
-    "bigquery-demo-436010-099787ddf471.json",
-    scopes=["https://www.googleapis.com/auth/spreadsheets"]
-)
-gc = gspread.authorize(creds)
+# --- Authenticate using Streamlit Secrets (from secrets.toml) ---
+try:
+    creds = Credentials.from_service_account_info(
+        st.secrets["gcp"]["service_account"],
+        scopes=["https://www.googleapis.com/auth/spreadsheets"]
+    )
+    gc = gspread.authorize(creds)
+    st.success("✅ Authentication successful!")
+except Exception as e:
+    st.error(f"❌ Authentication failed: {e}")
+    st.stop()
 
 # --- Open Google Sheet (Corrected String) ---
 spreadsheet = gc.open_by_key("1UMpZOBKxe3YghAbQFazyZAZgGcON7YVBDX6e-bUl8wI")
